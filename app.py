@@ -322,11 +322,20 @@ with col2:
                 profile_data = {
                     "📋 Attribute": ["🌍 Geography", "👤 Gender", "🎂 Age", "💳 Credit Score", "💵 Balance", 
                                  "💼 Salary", "📅 Tenure", "📦 Products", "💳 Credit Card", "✅ Active Member"],
-                    "📊 Value": [geography, gender, f"{age} years", credit_score, f"${balance:,.2f}", 
-                             f"${estimated_salary:,.2f}", f"{tenure} years", num_of_products,
-                             "Yes ✓" if has_cr_card else "No ✗", "Yes ✓" if is_active_member else "No ✗"]
+                    "📊 Value": [
+                        geography, 
+                        gender, 
+                        str(age), 
+                        str(credit_score), 
+                        f"${balance:,.2f}", 
+                        f"${estimated_salary:,.2f}", 
+                        f"{tenure} years", 
+                        str(num_of_products),
+                        "Yes ✓" if has_cr_card else "No ✗", 
+                        "Yes ✓" if is_active_member else "No ✗"
+                    ]
                 }
-                st.dataframe(pd.DataFrame(profile_data), use_container_width=True)
+                st.dataframe(pd.DataFrame(profile_data), width='stretch')
             
             # Risk factors analysis
             with st.expander("🔍 Risk Factors Analysis"):
