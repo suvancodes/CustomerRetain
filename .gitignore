@@ -59,6 +59,10 @@ Thumbs.db
 .streamlit/
 .streamlit/secrets.toml
 
+Data files (optional - uncomment if needed)
+*.csv
+*.xlsx
+data/
 
 # Temporary files
 *.tmp
