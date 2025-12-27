@@ -1,0 +1,10 @@
+start conda -> conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+create venv -> conda create -p venv python==3.10 -y
+active venv -> conda activate venv/
+initilize git -> git init
+add readme file -> git add README.md
+first commit -> git commit -m "first commit"
+select branch -> git branch -M main
+linked with github repo -> git remote add origin https://github.com/suvancodes/ML_Project.git
+push readme to git repo -> git push -u origin main
+ create a file in github using this clone it in vs code -> git pull
