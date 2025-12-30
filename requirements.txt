@@ -1,10 +1,6 @@
-numpy==1.26.4
+numpy==1.24.3
 pandas==2.0.3
 scikit-learn==1.3.2
-matplotlib==3.7.1
-seaborn==0.12.2
-tensorboard==2.15.0
-ipykernel
-streamlit
+streamlit>=1.28
 tensorflow-cpu==2.13.0
 protobuf==3.20.3
