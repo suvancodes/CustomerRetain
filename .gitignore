@@ -55,16 +55,4 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Streamlit
-.streamlit/
-.streamlit/secrets.toml
 
-Data files (optional - uncomment if needed)
-*.csv
-*.xlsx
-data/
-
-# Temporary files
-*.tmp
-*.temp
-*.bak

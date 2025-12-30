@@ -286,31 +286,28 @@ with col2:
                 """, unsafe_allow_html=True)
                 
             elif prediction_proba >= 0.3:  # 30-50% Medium Risk
-                st.info(f"⚡ **MEDIUM RISK**: Customer has {prediction_proba:.1%} probability of churning")
+                st.info(f"📊 **MEDIUM RISK**: Customer has {prediction_proba:.1%} probability of churning")
                 st.markdown("""
                 <div class='action-card'>
-                <h3>🎯 Preventive Actions:</h3>
+                <h3>🎯 Recommended Actions:</h3>
                 <ul>
                     <li>📧 Send personalized engagement email</li>
-                    <li>🎁 Offer loyalty rewards (5-10% discount)</li>
-                    <li>📊 Monitor account activity weekly</li>
-                    <li>💬 Gather feedback through survey</li>
-                    <li>🌟 Highlight unused features and benefits</li>
+                    <li>🎁 Offer loyalty rewards</li>
+                    <li>📊 Monitor account activity closely</li>
+                    <li>🤝 Schedule quarterly check-in</li>
                 </ul>
                 </div>
                 """, unsafe_allow_html=True)
                 
-            else:  # <30% Low Risk
-                st.success(f"✅ **EXCELLENT**: Customer has {retention_prob:.1%} retention probability!")
+            else:  # Below 30% - Low Risk
+                st.success(f"✅ **LOW RISK**: Customer has only {prediction_proba:.1%} probability of churning")
                 st.markdown("""
                 <div class='action-card'>
-                <h3>🎯 Engagement Actions:</h3>
+                <h3>🎯 Maintenance Actions:</h3>
                 <ul>
-                    <li>🌟 Continue current engagement strategy</li>
-                    <li>🎁 Introduce referral rewards program</li>
-                    <li>📈 Offer premium service upgrades</li>
-                    <li>💬 Request testimonials and reviews</li>
-                    <li>🤝 Build long-term relationship initiatives</li>
+                    <li>📧 Continue regular engagement</li>
+                    <li>🎁 Include in loyalty programs</li>
+                    <li>📊 Standard monitoring</li>
                 </ul>
                 </div>
                 """, unsafe_allow_html=True)
@@ -319,47 +316,24 @@ with col2:
             
             # Additional insights
             with st.expander("📊 View Detailed Customer Profile"):
-                profile_data = {
-                    "📋 Attribute": ["🌍 Geography", "👤 Gender", "🎂 Age", "💳 Credit Score", "💵 Balance", 
-                                 "💼 Salary", "📅 Tenure", "📦 Products", "💳 Credit Card", "✅ Active Member"],
-                    "📊 Value": [
-                        geography, 
-                        gender, 
-                        str(age), 
-                        str(credit_score), 
-                        f"${balance:,.2f}", 
-                        f"${estimated_salary:,.2f}", 
-                        f"{tenure} years", 
-                        str(num_of_products),
-                        "Yes ✓" if has_cr_card else "No ✗", 
-                        "Yes ✓" if is_active_member else "No ✗"
-                    ]
-                }
-                st.dataframe(pd.DataFrame(profile_data), width='stretch')
+                st.write(f"**Credit Score:** {credit_score}")
+                st.write(f"**Age:** {age}")
+                st.write(f"**Geography:** {geography}")
+                st.write(f"**Gender:** {gender}")
+                st.write(f"**Balance:** ${balance:,.2f}")
+                st.write(f"**Tenure:** {tenure} years")
             
             # Risk factors analysis
             with st.expander("🔍 Risk Factors Analysis"):
-                st.markdown("### Key Indicators:")
-                risk_factors = []
-                
+                st.write("Key factors influencing this prediction:")
                 if age > 50:
-                    risk_factors.append("⚠️ Age above 50 - Higher churn tendency")
+                    st.write("• Age above 50 may increase churn risk")
                 if balance == 0:
-                    risk_factors.append("⚠️ Zero balance - Inactive account")
-                if not is_active_member:
-                    risk_factors.append("⚠️ Inactive member status")
+                    st.write("• Zero balance indicates potential disengagement")
+                if is_active_member == 0:
+                    st.write("• Inactive member status increases risk")
                 if num_of_products == 1:
-                    risk_factors.append("⚠️ Only one product - Low engagement")
-                if tenure < 2:
-                    risk_factors.append("⚠️ Short tenure - New customer")
-                if credit_score < 600:
-                    risk_factors.append("⚠️ Low credit score")
-                    
-                if risk_factors:
-                    for factor in risk_factors:
-                        st.markdown(f"- {factor}")
-                else:
-                    st.success("✅ No major risk factors detected!")
+                    st.write("• Single product customers are more likely to churn")
 
 # Footer
 st.markdown("---")
