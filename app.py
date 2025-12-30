@@ -204,49 +204,33 @@ with col2:
 
             # Combine one-hot encoded columns with input data
             input_data = pd.concat([input_data.reset_index(drop=True), geo_encoded_df], axis=1)
-
+            
             # Scale the input data
             input_data_scaled = scaler.transform(input_data)
-
-            # Predict churn
+            
+            # Make prediction
             prediction = model.predict(input_data_scaled)
             prediction_proba = prediction[0][0]
-
-            # Display results with styling
-            st.markdown("<div class='prediction-box'>", unsafe_allow_html=True)
             
-            st.markdown(f"<h2 style='text-align: center; color: #667eea; font-weight: 700;'>📊 Prediction Results</h2>", unsafe_allow_html=True)
+            # Display results - Remove the empty prediction-box div wrapper
+            st.markdown("### 📊 Prediction Results")
             
-            # Risk Badge
-            if prediction_proba >= 0.7:
-                risk_level = "CRITICAL RISK"
-                badge_class = "high-risk"
-                risk_emoji = "🔴"
-            elif prediction_proba >= 0.5:
-                risk_level = "HIGH RISK"
-                badge_class = "high-risk"
-                risk_emoji = "🟠"
+            # Determine risk level
+            if prediction_proba >= 0.5:
+                st.error(f"🚨 **HIGH RISK**: Customer has {prediction_proba:.1%} probability of churning")
             elif prediction_proba >= 0.3:
-                risk_level = "MEDIUM RISK"
-                badge_class = "medium-risk"
-                risk_emoji = "🟡"
+                st.warning(f"⚠️ **MEDIUM RISK**: Customer has {prediction_proba:.1%} probability of churning")
             else:
-                risk_level = "LOW RISK"
-                badge_class = "low-risk"
-                risk_emoji = "🟢"
+                st.success(f"✅ **LOW RISK**: Customer has only {prediction_proba:.1%} probability of churning")
             
-            st.markdown(f"<center><div class='risk-badge {badge_class}'>{risk_emoji} {risk_level}</div></center>", unsafe_allow_html=True)
-            
-            # Metrics
+            # Display metrics
             col_a, col_b, col_c = st.columns(3)
             with col_a:
-                st.metric(label="🔻 Churn Probability", value=f"{prediction_proba:.1%}")
+                st.metric("Churn Probability", f"{prediction_proba:.1%}")
             with col_b:
-                retention_prob = 1 - prediction_proba
-                st.metric(label="✅ Retention Probability", value=f"{retention_prob:.1%}")
+                st.metric("Retention Probability", f"{1-prediction_proba:.1%}")
             with col_c:
-                confidence = max(prediction_proba, retention_prob)
-                st.metric(label="🎯 Confidence", value=f"{confidence:.1%}")
+                st.metric("Confidence", f"{max(prediction_proba, 1-prediction_proba):.1%}")
             
             # Progress bar
             st.markdown("<p style='text-align: center; font-weight: 600; margin-top: 20px;'>Churn Risk Level</p>", unsafe_allow_html=True)
@@ -311,8 +295,6 @@ with col2:
                 </ul>
                 </div>
                 """, unsafe_allow_html=True)
-            
-            st.markdown("</div>", unsafe_allow_html=True)
             
             # Additional insights
             with st.expander("📊 View Detailed Customer Profile"):
